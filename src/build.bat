@@ -1,1 +1,0 @@
-py -m PyInstaller main.py --name "Record" --icon "assets/imgs/favicon.png" --onefile --noconsole --add-data "assets/fonts/Montserrat-Black.ttf:." --add-data "assets/fonts/Montserrat-Bold.ttf:." --add-data "assets/fonts/Montserrat-Regular.ttf:." --exclude websockets --exclude pandas --exclude jinja --exclude PIL
