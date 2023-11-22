@@ -22,4 +22,5 @@ py main.py
 3) Let the UI explain the rest.
 
 ### **Images**
-![ui](imgs/ui.png)
+![Idle UI](imgs/idle.png)
+![Recording UI](imgs/recording.png)
