@@ -10,7 +10,7 @@
 import cv2
 import os
 import pathlib
-import pyautogui
+import mss
 import numpy
 import threading
 
@@ -57,7 +57,7 @@ class recorder:
         return cv2.VideoWriter(path, self.fourcc, float(self.fps / 2), self.resolution, True)
 
     # recording
-    def startRecording(self):
+    def startRecording(self, monitorID: int = 1):
         if self.recording:
             return
         
@@ -72,6 +72,10 @@ class recorder:
             # get video writer
             videoWriter = self.__videoWriter(self.__pathAndFile(self.outputFolderPathRel, self.videoFileName, self.videoFileExtension))
             
+            # get monitor details
+            sct = mss.mss()
+            monitor = sct.monitors[monitorID]
+
             # recording loop
             while True: 
                 # check stuffs before doing anything
@@ -79,7 +83,7 @@ class recorder:
                     break
                 
                 # capture screen
-                frame = pyautogui.screenshot()
+                frame = sct.grab(monitor)
                 frame = numpy.array(frame)
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                     
