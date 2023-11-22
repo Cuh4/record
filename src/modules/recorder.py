@@ -4,6 +4,7 @@
 
 # major thanks to https://github.com/JRodrigoF/AVrecordeR/ for showing how to record video and audio simultaneously and output into one
 # although i couldn't implement it because pyaudio doesn't record output, only input (like microphones), so this only records video now
+# you can see my attempt in src/modules/OLDrecorder.py
 
 # // ---- Imports
 import cv2
