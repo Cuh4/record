@@ -1,0 +1,5 @@
+flet
+screeninfo
+win10toast
+pyaudio
+wave
