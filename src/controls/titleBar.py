@@ -10,7 +10,7 @@ import modules
 # // ---- Main
 class control(flet.UserControl):
     # // init
-    def __init__(self, name: str, page: flet.Page):
+    def __init__(self, name: str, page: flet.Page, iconSize: int = 15, height: int = 25):
         # // setup
         # init
         super().__init__()
@@ -19,6 +19,9 @@ class control(flet.UserControl):
         # main
         self.name = name
         self.page = page
+
+        self.iconSize = iconSize
+        self.height = height
     
     # // ui
     def build(self):
@@ -28,7 +31,7 @@ class control(flet.UserControl):
             icon = flet.icons.ARROW_UPWARD_ROUNDED,
             icon_color = flet.colors.ORANGE,
             on_click = self.topMostButton_onClick,
-            icon_size = 15
+            icon_size = self.iconSize
         )
         
         # // main
@@ -47,15 +50,23 @@ class control(flet.UserControl):
                         # second half of title bar (right)
                         flet.Row(
                             controls = [
+                                # minimize button
+                                flet.IconButton(
+                                    icon = flet.icons.HORIZONTAL_RULE_ROUNDED,
+                                    icon_color = flet.colors.GREEN_ACCENT,
+                                    on_click = self.minimizeButton_onClick,
+                                    icon_size = self.iconSize
+                                ),
+
                                 # top-most button
                                 self.topMostButton,
-                                
+
                                 # close button
                                 flet.IconButton(
                                     icon = flet.icons.CLOSE_ROUNDED,
                                     icon_color = flet.colors.RED,
                                     on_click = self.closeButton_onClick,
-                                    icon_size = 15
+                                    icon_size = self.iconSize
                                 )
                             ],
                             
@@ -72,12 +83,16 @@ class control(flet.UserControl):
                 maximizable = False
             ),
             
-            height = 25,
+            height = self.height,
             expand = True,
             bgcolor = flet.colors.BLACK38
         )
         
     # // functionality
+    def minimizeButton_onClick(self, _):
+        self.page.window_minimized = True
+        self.page.update()
+    
     def closeButton_onClick(self, _):
         self.page.window_close() # purely destroys gui and all flet stuffs
         exit(0) # destroys threads
