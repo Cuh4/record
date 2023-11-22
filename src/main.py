@@ -25,6 +25,7 @@ def mainApp(page: flet.Page):
     
     page.window_resizable = False
     
+    page.window_frameless = True
     page.window_title_bar_hidden = True
 
     # page layout
@@ -35,6 +36,7 @@ def mainApp(page: flet.Page):
     # page appearance
     page.title = "Record"
     page.bgcolor = modules.helpers.RGBToHex(15, 15, 15)
+    
     
     # fonts
     page.fonts = {
@@ -95,5 +97,6 @@ def mainApp(page: flet.Page):
 # // Start app
 flet.app(
     target = mainApp,
-    name = "Record"
+    name = "Record",
+    assets_dir = modules.helpers.getWorkingDirectory() if modules.helpers.isBuiltApplication() else "assets"
 )
