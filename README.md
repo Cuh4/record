@@ -20,8 +20,6 @@ cd src
 py main.py
 ```
 
-4) Let the UI explain the rest.
-
 ### **Images**
 ![Idle UI](imgs/idle.png)
 ![Recording UI](imgs/recording.png)
