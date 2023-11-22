@@ -5,8 +5,6 @@ Flet (Python implementation of Google's Flutter) app designed to record your pri
 
 Only works on Windows.
 
-probably my hardest project yet
-
 ### **How To Use**
 1) `git clone` this repo.
 ```
