@@ -3,8 +3,6 @@
 ### **Overview**
 Flet (Python implementation of Google's Flutter) app designed to record your primary monitor's screen. Includes audio and video.
 
-Only works on Windows.
-
 ### **How To Use**
 1) `git clone` this repo.
 ```
