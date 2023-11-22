@@ -245,23 +245,23 @@ class control(flet.UserControl):
                 if not self.recording:
                     break
                 
-                # wait a second
-                time.sleep(1)
-                
                 # increase elapsed seconds
                 self.elapsedSeconds += 1
                 self.updateTimerText()
+                
+                # wait a second
+                time.sleep(1)
                 
         threading.Thread(
             target = increaseTimer
         ).start()
             
     def stopRecording(self):
-        # release stuffs
-        self.recorder.endRecording()
-        
         # set state
         self.recording = False
+        
+        # release stuffs
+        self.recorder.endRecording()
         
         # reset elapsed seconds
         self.elapsedSeconds = 0
