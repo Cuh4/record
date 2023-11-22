@@ -204,6 +204,7 @@ class control(flet.UserControl):
         self.fpsText.update()
     
     def recordingButton_onClick(self, _):
+        # // functionality
         # start/stop recording
         if self.recording:
             # stop recording
@@ -212,7 +213,8 @@ class control(flet.UserControl):
             # start recording
             self.record()
         
-        # update controls
+        # // visuals
+        # change icons depending on recording state
         if self.recording:
             # change icon of recording button
             self.recordingButton.icon = flet.icons.STOP_ROUNDED
@@ -222,8 +224,12 @@ class control(flet.UserControl):
             self.recordingButton.icon = flet.icons.CIRCLE_ROUNDED
             self.recordingButton.icon_color = flet.colors.WHITE
             
+        # disable controls depending on recording state
         self.videoFileNameInput.disabled = self.recording
+        self.fpsSlider.disabled = self.recording
             
+        # update
+        self.fpsSlider.update()
         self.videoFileNameInput.update()
         self.recordingButton.update()
         
