@@ -1,1 +1,1 @@
-py -m pip PyInstaller main.py --name "Record" --icon "assets/favicon.png" --onefile --noconsole --exclude pandas --exclude jinja --exclude PIL
+py -m PyInstaller main.py --name "Record" --icon "assets/favicon.png" --onefile --noconsole --exclude pandas --exclude jinja --exclude PIL
