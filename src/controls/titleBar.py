@@ -41,10 +41,14 @@ class control(flet.UserControl):
                 content = flet.Row(
                     controls = [
                         # first half of title bar (left)
-                        flet.Text(
-                            value = self.name,
-                            text_align = flet.TextAlign.LEFT,
-                            font_family = "MontserratBlack"
+                        flet.Container(
+                            content = flet.Text(
+                                value = self.name,
+                                text_align = flet.TextAlign.LEFT,
+                                font_family = "MontserratBlack"
+                            ),
+                            
+                            padding = flet.padding.only(7)
                         ),
                         
                         # second half of title bar (right)
