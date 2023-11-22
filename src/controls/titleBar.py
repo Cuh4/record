@@ -48,34 +48,40 @@ class control(flet.UserControl):
                                 font_family = "MontserratBlack"
                             ),
                             
-                            padding = flet.padding.only(7)
+                            padding = flet.padding.only(7),
+                            expand = True
                         ),
                         
                         # second half of title bar (right)
-                        flet.Row(
-                            controls = [
-                                # minimize button
-                                flet.IconButton(
-                                    icon = flet.icons.HORIZONTAL_RULE_ROUNDED,
-                                    icon_color = flet.colors.GREEN_ACCENT,
-                                    on_click = self.minimizeButton_onClick,
-                                    icon_size = self.iconSize
-                                ),
+                        flet.Container(
+                            content = flet.Row(
+                                controls = [
+                                    # minimize button
+                                    flet.IconButton(
+                                        icon = flet.icons.HORIZONTAL_RULE_ROUNDED,
+                                        icon_color = flet.colors.GREEN_ACCENT,
+                                        on_click = self.minimizeButton_onClick,
+                                        icon_size = self.iconSize
+                                    ),
 
-                                # top-most button
-                                self.topMostButton,
+                                    # top-most button
+                                    self.topMostButton,
 
-                                # close button
-                                flet.IconButton(
-                                    icon = flet.icons.CLOSE_ROUNDED,
-                                    icon_color = flet.colors.RED,
-                                    on_click = self.closeButton_onClick,
-                                    icon_size = self.iconSize
-                                )
-                            ],
+                                    # close button
+                                    flet.IconButton(
+                                        icon = flet.icons.CLOSE_ROUNDED,
+                                        icon_color = flet.colors.RED,
+                                        on_click = self.closeButton_onClick,
+                                        icon_size = self.iconSize
+                                    )
+                                ],
+                                
+                                alignment = flet.MainAxisAlignment.END,
+                                spacing = 3
+                            ),
                             
-                            alignment = flet.MainAxisAlignment.END,
-                            spacing = 3
+                            padding = flet.padding.only(right = 7),
+                            expand = True
                         )
                     ],
                     
