@@ -9,13 +9,18 @@ Flet (Python implementation of Google's Flutter) app designed to record your pri
 git clone https://github.com/Cuh4/record
 ```
 
-2) Start the application using the following commands:
+2) Install the required packages.
+```
+py -m pip install -r requirements.txt
+```
+
+3) Start the application using the following commands:
 ```
 cd src
 py main.py
 ```
 
-3) Let the UI explain the rest.
+4) Let the UI explain the rest.
 
 ### **Images**
 ![Idle UI](imgs/idle.png)
