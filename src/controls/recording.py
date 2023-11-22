@@ -61,8 +61,6 @@ class control(flet.UserControl):
             height = 15,
             border_color = flet.colors.WHITE,
             tooltip = "Video Name",
-            max_length = 15,
-            max_lines = 1,
 
             text_style = flet.TextStyle(
                 size = 11,
@@ -191,7 +189,17 @@ class control(flet.UserControl):
     
     # control callbacks    
     def videoFileNameInput_onChange(self, _):
+        # get new video filename
         value = self.videoFileNameInput.value or ""
+        
+        # enforce character limit
+        if len(value) > 15:
+            value = value[:15]
+            
+            self.videoFileNameInput.value = value
+            self.videoFileNameInput.update()
+
+        # change video filename to the desired filename
         self.changeFileName(value)
         
     def fpsSlider_onSlideChange(self, _):
