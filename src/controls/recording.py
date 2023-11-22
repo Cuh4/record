@@ -61,6 +61,8 @@ class control(flet.UserControl):
             height = 15,
             border_color = flet.colors.WHITE,
             tooltip = "Video Name",
+            max_length = 12,
+            max_lines = 1,
 
             text_style = flet.TextStyle(
                 size = 11,
