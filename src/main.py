@@ -14,8 +14,8 @@ import modules
 def mainApp(page: flet.Page):
     # // set page properties
     # window size
-    page.window_height = 110
-    page.window_width = 350
+    page.window_height = 175
+    page.window_width = 475
     
     page.window_min_height = page.window_height
     page.window_min_width = page.window_width
@@ -58,6 +58,8 @@ def mainApp(page: flet.Page):
         folderPath = "videos"
     )
     
+    recordControl.setupNavigationDrawer()
+    
     # finalization
     page.add(
         flet.Stack(
@@ -80,7 +82,7 @@ def mainApp(page: flet.Page):
                 # main app
                 flet.Column(
                     controls = [
-                        titleBarControl,
+                        titleBarControl, # i didn't know appbar existed. oops
                         recordControl
                     ],
                     
