@@ -83,9 +83,8 @@ class recorder:
                     break
                 
                 # capture screen
-                frame = sct.grab(monitor)
-                frame = numpy.array(frame)
-                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                frame = numpy.array(sct.grab(monitor))
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR)
                     
                 # fire event
                 recordEvent.fire(frame)
