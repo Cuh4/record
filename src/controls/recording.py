@@ -187,7 +187,7 @@ class control(flet.UserControl):
         time = datetime.timedelta(seconds = int(self.elapsedSeconds))
         time = str(time)
 
-        return f"{time} @ {self.fps} FPS"
+        return f"{time} @ {self.fps} FPS @ Monitor {self.targetMonitorID + 1}"
     
     def showDrawer(self):
         self.page.drawer.open = True
