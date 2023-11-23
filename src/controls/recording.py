@@ -130,6 +130,11 @@ class control(flet.UserControl):
                         vertical_alignment = flet.CrossAxisAlignment.CENTER
                     ),
                     
+                    flet.Divider(
+                        thickness = 1,
+                        color = flet.colors.WHITE
+                    ),
+                    
                     flet.Row(
                         controls = [
                             self.timerText,
@@ -137,11 +142,6 @@ class control(flet.UserControl):
                         ],
                         
                         alignment = flet.MainAxisAlignment.CENTER
-                    ),
-                    
-                    flet.Divider(
-                        thickness = 2,
-                        color = flet.colors.WHITE
                     ),
                     
                     flet.Row(
@@ -157,10 +157,10 @@ class control(flet.UserControl):
                 ],
                 
                 expand = True,
-                alignment = flet.MainAxisAlignment.SPACE_BETWEEN,
+                alignment = flet.MainAxisAlignment.CENTER,
                 horizontal_alignment = flet.CrossAxisAlignment.CENTER,
-                spacing = 0.2,
-                scale = 0.85
+                scale = 0.85,
+                spacing = 2.5
             ),
 
             expand = True
