@@ -55,6 +55,8 @@ class control(flet.UserControl):
             border_color = flet.colors.WHITE,
             tooltip = "Video Name",
             hint_text = "Video Name",
+            
+            max_length = 15,
 
             text_style = flet.TextStyle(
                 size = 14,
@@ -231,13 +233,6 @@ class control(flet.UserControl):
     def videoFileNameInput_onChange(self, _):
         # get new video filename
         value = self.videoFileNameInput.value or ""
-        
-        # enforce character limit
-        if len(value) > 15:
-            value = value[:15]
-            
-            self.videoFileNameInput.value = value
-            self.videoFileNameInput.update()
 
         # change video filename to the desired filename
         self.changeFileName(value)
@@ -264,11 +259,11 @@ class control(flet.UserControl):
         if self.recording:
             # change icon of recording button
             self.recordingButton.icon = flet.icons.STOP_ROUNDED
-            self.recordingButton.icon_color = flet.colors.GREEN
+            self.recordingButton.text = "Stop Recording"
         else:
             # change icon of recording button
-            self.recordingButton.icon = flet.icons.CIRCLE_ROUNDED
-            self.recordingButton.icon_color = flet.colors.RED
+            self.recordingButton.icon = flet.icons.CIRCLE_ROUNDED  
+            self.recordingButton.text = "Record"
             
         # disable controls depending on recording state
         self.videoFileNameInput.disabled = self.recording
