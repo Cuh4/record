@@ -170,7 +170,10 @@ class control(flet.UserControl):
     # setup stuffs
     def setupNavigationDrawer(self):
         self.page.drawer = flet.NavigationDrawer(
-            controls = [flet.NavigationDrawerDestination(icon = flet.icons.MONITOR_ROUNDED, selected_icon = flet.icons.CHECK_BOX_ROUNDED, label = f"{monitor.name} ({monitorID})") for monitorID, monitor in enumerate(self.monitors)],
+            controls = [
+                flet.Container(height = 15),
+                *[flet.NavigationDrawerDestination(icon = flet.icons.MONITOR_ROUNDED, selected_icon = flet.icons.CHECK_BOX_ROUNDED, label = f"{monitor.name} ({monitorID})") for monitorID, monitor in enumerate(self.monitors)]
+            ],
             on_change = self.navigationDrawer_onChange,
             
             surface_tint_color = flet.colors.BLACK,
