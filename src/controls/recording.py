@@ -176,6 +176,7 @@ class control(flet.UserControl):
                 flet.Container(height = 15),
                 *[flet.NavigationDrawerDestination(icon = flet.icons.MONITOR_ROUNDED, selected_icon = flet.icons.CHECK_BOX_ROUNDED, label = f"{monitor.name} ({monitorID})") for monitorID, monitor in enumerate(self.monitors)]
             ],
+
             on_change = self.navigationDrawer_onChange,
             
             surface_tint_color = flet.colors.BLACK,
@@ -229,6 +230,8 @@ class control(flet.UserControl):
 
         self.targetMonitorID = int(chosenID)
         self.targetMonitor = self.monitors[self.targetMonitorID]
+        
+        self.updateTimerText()
       
     def videoFileNameInput_onChange(self, _):
         # get new video filename
