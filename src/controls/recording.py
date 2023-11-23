@@ -4,6 +4,7 @@
 
 # // ---- Imports
 import flet
+from flet_core import alignment
 import datetime
 import os
 import pathlib
@@ -33,21 +34,15 @@ class control(flet.UserControl):
         self.videoFileExtension = videoFileExtension
         self.videoCodec = videoCodec
         
-        self.monitor = get_monitors()[0]
+        self.monitors = get_monitors()
 
         # video
         self.recording = False
         self.elapsedSeconds = 0
         self.fps = 60
         
-        self.recorder = modules.recorder(
-            fileName = self.videoFileName,
-            resolution = (self.monitor.width, self.monitor.height),
-            codec = self.videoCodec, 
-            fileExtension = self.videoFileExtension,
-            outputFolderPath = self.folderPath,
-            fps = self.fps
-        )
+        self.targetMonitor = self.monitors[0]
+        self.targetMonitorID = 0
 
         # other
         self.page = page
@@ -58,37 +53,55 @@ class control(flet.UserControl):
         # video file name input
         self.videoFileNameInput = flet.TextField(
             value = self.videoFileName,
-            height = 15,
             border_color = flet.colors.WHITE,
             tooltip = "Video Name",
+            hint_text = "Video Name",
 
             text_style = flet.TextStyle(
-                size = 11,
-                font_family = "Montserrat",
+                size = 14,
+                font_family = "Montserrat"
             ),
             
             on_change = self.videoFileNameInput_onChange
         )
         
         # recording button
-        self.recordingButton = flet.IconButton(
+        self.recordingButton = flet.OutlinedButton(
+            text = "Record",
+
             icon = flet.icons.CIRCLE_ROUNDED,
-            icon_color = flet.colors.WHITE,
+            icon_color = flet.colors.RED,
+
             on_click = self.recordingButton_onClick
+        )
+        
+        # open folder button
+        self.openFolderButton = flet.OutlinedButton(
+            text = "Open Folder",
+            
+            icon = flet.icons.FOLDER_COPY_ROUNDED,
+            icon_color = flet.colors.ORANGE_400,
+
+            on_click = self.folder_onClick
         )
         
         # timer text
         self.timerText = flet.Text(
-            value = "0:00:00",
+            value = self.timerFormatted(),
             font_family = "Montserrat"
+        )
+        
+        # choose monitor menu button
+        self.chooseMonitorButton = flet.OutlinedButton(
+            text = "Choose Monitor",
+
+            icon = flet.icons.MONITOR_ROUNDED,
+            icon_color = flet.colors.WHITE,
+            
+            on_click = lambda _: self.toggleDrawer()
         )
         
         # fps slider
-        self.fpsText = flet.Text(
-            value = f"{self.fps} FPS",
-            font_family = "Montserrat"
-        )
-        
         self.fpsSlider = flet.Slider(
             label = "{value} FPS",
 
@@ -101,64 +114,89 @@ class control(flet.UserControl):
             thumb_color = flet.colors.WHITE,
             scale = 0.8,
             
-            on_change = self.fpsSlider_onSlideChange
+            on_change = self.fpsSlider_onChange
         )
         
         # // main
         # finalization
-        return flet.Row(
-            controls = [
-                flet.Column(
-                    controls = [
-                        self.videoFileNameInput,
+        return flet.Container(
+            content = flet.Column(
+                controls = [
+                    flet.Row(
+                        controls = [
+                            self.videoFileNameInput
+                        ],
                         
-                        flet.Divider(
-                            thickness = 2,
-                            color = flet.colors.WHITE
-                        ),
-                        
-                        flet.Row(
-                            controls = [
-                                self.recordingButton,
-
-                                flet.IconButton(
-                                    icon = flet.icons.FOLDER_COPY_ROUNDED,
-                                    icon_color = flet.colors.ORANGE_400,
-                                    on_click = self.folder_onClick
-                                ),
-                                
-                                self.timerText
-                            ],
-                        
-                            alignment = flet.MainAxisAlignment.CENTER,
-                            vertical_alignment = flet.CrossAxisAlignment.CENTER
-                        )
-                    ],
+                        alignment = flet.MainAxisAlignment.CENTER,
+                        vertical_alignment = flet.CrossAxisAlignment.CENTER
+                    ),
                     
-                    expand = True,
-                    alignment = flet.MainAxisAlignment.CENTER,
-                    horizontal_alignment = flet.CrossAxisAlignment.CENTER,
-                    spacing = 0.2,
-                    scale = 0.85
-                ),
+                    flet.Row(
+                        controls = [
+                            self.timerText,
+                            self.fpsSlider
+                        ],
+                        
+                        alignment = flet.MainAxisAlignment.CENTER
+                    ),
+                    
+                    flet.Divider(
+                        thickness = 2,
+                        color = flet.colors.WHITE
+                    ),
+                    
+                    flet.Row(
+                        controls = [
+                            self.recordingButton,
+                            self.openFolderButton,
+                            self.chooseMonitorButton
+                        ],
+                    
+                        alignment = flet.MainAxisAlignment.CENTER,
+                        vertical_alignment = flet.CrossAxisAlignment.CENTER
+                    )
+                ],
                 
-                flet.Column(
-                    controls = [
-                        self.fpsText,
-                        self.fpsSlider
-                    ],
+                expand = True,
+                alignment = flet.MainAxisAlignment.SPACE_BETWEEN,
+                horizontal_alignment = flet.CrossAxisAlignment.CENTER,
+                spacing = 0.2,
+                scale = 0.85
+            ),
 
-                    expand = True,
-                    alignment = flet.MainAxisAlignment.CENTER,
-                    horizontal_alignment = flet.CrossAxisAlignment.CENTER,
-                    spacing = 0.2,
-                    scale = 0.85
-                )
-            ]
+            expand = True
         )
         
     # // functionality
+    # setup stuffs
+    def setupNavigationDrawer(self):
+        self.page.drawer = flet.NavigationDrawer(
+            controls = [flet.NavigationDrawerDestination(icon = flet.icons.MONITOR_ROUNDED, selected_icon = flet.icons.CHECK_BOX_ROUNDED, label = f"{monitor.name} ({monitorID})") for monitorID, monitor in enumerate(self.monitors)],
+            on_change = self.navigationDrawer_onChange,
+            
+            surface_tint_color = flet.colors.BLACK,
+            indicator_color = flet.colors.ORANGE
+        )
+    
     # helpers
+    def timerFormatted(self):
+        time = datetime.timedelta(seconds = int(self.elapsedSeconds))
+        time = str(time)
+
+        return f"{time} @ {self.fps} FPS"
+    
+    def showDrawer(self):
+        self.page.drawer.open = True
+        self.page.drawer.update()   
+        
+    def hideDrawer(self):
+        self.page.drawer.open = False
+        self.page.drawer.update()   
+        
+    def toggleDrawer(self):
+        self.page.drawer.open = not self.page.drawer.open
+        self.page.drawer.update()  
+
     def openRecordResultFolder(self):
         os.startfile(f"{self.folderPath}")
         
@@ -175,19 +213,19 @@ class control(flet.UserControl):
     
     def changeFileName(self, newFileName: str):
         self.videoFileName = modules.helpers.pathSafeName(newFileName)
-        self.recorder.videoFileName = self.videoFileName
     
     # control updates
     def updateTimerText(self):
-        # format time
-        time = datetime.timedelta(seconds = int(self.elapsedSeconds))
-        time = str(time)
-        
-        # update visuals
-        self.timerText.value = f"{time} @ {self.fps} FPS"
+        self.timerText.value = self.timerFormatted()
         self.timerText.update()
     
-    # control callbacks    
+    # control callbacks  
+    def navigationDrawer_onChange(self, _):
+        chosenID = self.page.drawer.selected_index or 0
+
+        self.targetMonitorID = int(chosenID)
+        self.targetMonitor = self.monitors[self.targetMonitorID]
+      
     def videoFileNameInput_onChange(self, _):
         # get new video filename
         value = self.videoFileNameInput.value or ""
@@ -202,16 +240,12 @@ class control(flet.UserControl):
         # change video filename to the desired filename
         self.changeFileName(value)
         
-    def fpsSlider_onSlideChange(self, _):
-        if self.recording:
-            return
-        
+    def fpsSlider_onChange(self, _):
         # update fps attribute
         self.fps = int(self.fpsSlider.value)
         
         # update visuals
-        self.fpsText.value = f"{self.fps} FPS"
-        self.fpsText.update()
+        self.updateTimerText()
     
     def recordingButton_onClick(self, _):
         # // functionality
@@ -232,15 +266,17 @@ class control(flet.UserControl):
         else:
             # change icon of recording button
             self.recordingButton.icon = flet.icons.CIRCLE_ROUNDED
-            self.recordingButton.icon_color = flet.colors.WHITE
+            self.recordingButton.icon_color = flet.colors.RED
             
         # disable controls depending on recording state
         self.videoFileNameInput.disabled = self.recording
         self.fpsSlider.disabled = self.recording
+        self.chooseMonitorButton.disabled = self.recording
             
         # update
-        self.fpsSlider.update()
         self.videoFileNameInput.update()
+        self.fpsSlider.update()
+        self.chooseMonitorButton.update()
         self.recordingButton.update()
         
     def folder_onClick(self, _):
@@ -253,7 +289,16 @@ class control(flet.UserControl):
         self.recording = True
 
         # record screen
-        self.recorder.startRecording()
+        self.recorder = modules.recorder(
+            fileName = self.videoFileName,
+            resolution = (self.targetMonitor.width, self.targetMonitor.height),
+            codec = self.videoCodec, 
+            fileExtension = self.videoFileExtension,
+            outputFolderPath = self.folderPath,
+            fps = self.fps
+        )
+
+        self.recorder.startRecording(self.targetMonitorID + 1)
         
         # increase timer text
         def increaseTimer():
