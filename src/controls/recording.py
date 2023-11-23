@@ -48,11 +48,10 @@ class control(flet.UserControl):
         self.page = page
 
     # // ui
-    def build(self):
+    def build(self):    
         # // controls
         # video file name input
         self.videoFileNameInput = flet.TextField(
-            value = self.videoFileName,
             border_color = flet.colors.WHITE,
             tooltip = "Video Name",
             hint_text = "Video Name",
