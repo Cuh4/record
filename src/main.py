@@ -14,8 +14,8 @@ import modules
 def mainApp(page: flet.Page):
     # // set page properties
     # window size
-    page.window_height = 175
-    page.window_width = 475
+    page.window_height = 205
+    page.window_width = 500
     
     page.window_min_height = page.window_height
     page.window_min_width = page.window_width
