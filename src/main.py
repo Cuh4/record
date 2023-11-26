@@ -13,7 +13,7 @@ import modules
 def mainApp(page: flet.Page):
     # // set page properties
     # window size
-    page.window_height = 75
+    page.window_height = 65
     page.window_width = 500
     
     page.window_min_height = page.window_height
@@ -62,15 +62,18 @@ def mainApp(page: flet.Page):
     )
     
     # finalization
-    page.add(flet.Column(
-        controls = [
-            titleBar,
-            recordControl
-        ],
-        
-        expand = True,
-        alignment = flet.MainAxisAlignment.SPACE_BETWEEN
-    ))
+    page.add(
+        flet.Column(
+            controls = [
+                titleBar,
+                recordControl
+            ],
+            
+            expand = True,
+            alignment = flet.MainAxisAlignment.SPACE_BETWEEN,
+            horizontal_alignment = flet.CrossAxisAlignment.START
+        )
+    )
     
 # // Start app
 flet.app(
