@@ -32,20 +32,20 @@ class control(flet.UserControl):
             text_align = flet.TextAlign.LEFT
         )
         
+        self.minimizeButton = flet.IconButton(
+            icon = flet.icons.HORIZONTAL_RULE_ROUNDED,
+            icon_color = flet.colors.WHITE,
+            icon_size = self.iconSize,
+            
+            on_click = self.minimizeButton_onClick
+        )
+
         self.topMostButton = flet.IconButton(
             icon = flet.icons.ARROW_UPWARD_ROUNDED,
             icon_color = flet.colors.ORANGE,
             icon_size = self.iconSize,
 
             on_click = self.topMostButton_onClick
-        )
-        
-        self.minimizeButton = flet.IconButton(
-            icon = flet.icons.LINE_STYLE_ROUNDED,
-            icon_color = flet.colors.WHITE,
-            icon_size = self.iconSize,
-            
-            on_click = self.minimizeButton_onClick
         )
         
         self.closeButton = flet.IconButton(
@@ -66,8 +66,7 @@ class control(flet.UserControl):
                         flet.Text(
                             value = self.name,
                             font_family = "Montserrat",
-                            text_align = flet.TextAlign.LEFT,
-                            expand = 3
+                            text_align = flet.TextAlign.LEFT
                         ),
                         
                         # buttons (second half)
@@ -77,12 +76,11 @@ class control(flet.UserControl):
                                 self.topMostButton,
                                 self.closeButton
                             ],
-
-                            expand = 1
                         )
                     ],
                     
-                    expand = True
+                    expand = True,
+                    alignment = flet.MainAxisAlignment.SPACE_BETWEEN
                 ),
 
                 bgcolor = modules.helpers.RGBToHex(15, 15, 15),
