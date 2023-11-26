@@ -1,4 +1,7 @@
 __pycache__/
+
+*.spec
+.vscode
+
 src/videos
-src/Record.spec
 src/build
