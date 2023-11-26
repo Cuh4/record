@@ -48,7 +48,6 @@ def mainApp(page: flet.Page):
     # recording control
     recordControl = controls.recording(
         page = page,
-        defaultVideoFileName = "unnamed",
         videoCodec = "mp4v",
         videoFileExtension = "mp4",
         folderPath = "videos"
