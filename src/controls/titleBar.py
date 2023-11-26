@@ -10,15 +10,15 @@ import modules
 # // ---- Main
 class control(flet.UserControl):
     # // init
-    def __init__(self, name: str, page: flet.Page, iconSize: int = 15, height: int = 25):
+    def __init__(self, page: flet.Page, name: str, iconSize: int = 15, height: int = 25):
         # // setup
         # init
         super().__init__()
         
         # // attributes
         # main
-        self.name = name
         self.page = page
+        self.name = name
 
         self.iconSize = iconSize
         self.height = height
@@ -26,76 +26,71 @@ class control(flet.UserControl):
     # // ui
     def build(self):
         # // controls
-        # top most button
+        self.title = flet.Text(
+            value = self.page.title,
+            font_family = "Montserrat",
+            text_align = flet.TextAlign.LEFT
+        )
+        
         self.topMostButton = flet.IconButton(
             icon = flet.icons.ARROW_UPWARD_ROUNDED,
             icon_color = flet.colors.ORANGE,
-            on_click = self.topMostButton_onClick,
-            icon_size = self.iconSize
+            icon_size = self.iconSize,
+
+            on_click = self.topMostButton_onClick
+        )
+        
+        self.minimizeButton = flet.IconButton(
+            icon = flet.icons.LINE_STYLE_ROUNDED,
+            icon_color = flet.colors.WHITE,
+            icon_size = self.iconSize,
+            
+            on_click = self.minimizeButton_onClick
+        )
+        
+        self.closeButton = flet.IconButton(
+            icon = flet.icons.CLOSE_ROUNDED,
+            icon_color = flet.colors.RED,
+            icon_size = self.iconSize,
+            
+            on_click = self.closeButton_onClick
         )
         
         # // main
         # finalization
-        return flet.Container(
-            content = flet.WindowDragArea(
+        return flet.WindowDragArea(
+            content = flet.Container(
                 content = flet.Row(
                     controls = [
-                        # first half of title bar (left)
-                        flet.Container(
-                            content = flet.Text(
-                                value = self.name,
-                                text_align = flet.TextAlign.LEFT,
-                                font_family = "MontserratBlack"
-                            ),
-                            
-                            padding = flet.padding.only(7),
-                            expand = True
+                        # title (first half)
+                        flet.Text(
+                            value = self.name,
+                            font_family = "Montserrat",
+                            text_align = flet.TextAlign.LEFT,
+                            expand = 3
                         ),
                         
-                        # second half of title bar (right)
-                        flet.Container(
-                            content = flet.Row(
-                                controls = [
-                                    # minimize button
-                                    flet.IconButton(
-                                        icon = flet.icons.HORIZONTAL_RULE_ROUNDED,
-                                        icon_color = flet.colors.GREEN_ACCENT,
-                                        on_click = self.minimizeButton_onClick,
-                                        icon_size = self.iconSize
-                                    ),
+                        # buttons (second half)
+                        flet.Row(
+                            controls = [
+                                self.minimizeButton,
+                                self.topMostButton,
+                                self.closeButton
+                            ],
 
-                                    # top-most button
-                                    self.topMostButton,
-
-                                    # close button
-                                    flet.IconButton(
-                                        icon = flet.icons.CLOSE_ROUNDED,
-                                        icon_color = flet.colors.RED,
-                                        on_click = self.closeButton_onClick,
-                                        icon_size = self.iconSize
-                                    )
-                                ],
-                                
-                                alignment = flet.MainAxisAlignment.END,
-                                spacing = 3
-                            ),
-                            
-                            padding = flet.padding.only(right = 7),
-                            expand = True
+                            expand = 1
                         )
                     ],
                     
-                    alignment = flet.MainAxisAlignment.SPACE_BETWEEN,
-                    vertical_alignment = flet.CrossAxisAlignment.CENTER
+                    expand = True
                 ),
 
-                expand = True,
-                maximizable = False
+                bgcolor = modules.helpers.RGBToHex(15, 15, 15),
+                expand = True
             ),
             
             height = self.height,
-            expand = True,
-            bgcolor = flet.colors.BLACK38
+            expand = True
         )
         
     # // functionality
