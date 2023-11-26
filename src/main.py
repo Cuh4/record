@@ -14,8 +14,8 @@ import modules
 def mainApp(page: flet.Page):
     # // set page properties
     # window size
-    page.window_height = 205
-    page.window_width = 500
+    page.window_height = 65
+    page.window_width = 400
     
     page.window_min_height = page.window_height
     page.window_min_width = page.window_width
@@ -46,9 +46,6 @@ def mainApp(page: flet.Page):
     }
     
     # // app controls
-    # title bar control
-    titleBarControl = controls.titleBar(page.title, page)
-    
     # recording control
     recordControl = controls.recording(
         page = page,
@@ -82,7 +79,6 @@ def mainApp(page: flet.Page):
                 # main app
                 flet.Column(
                     controls = [
-                        titleBarControl, # i didn't know appbar existed. oops
                         recordControl
                     ],
                     
