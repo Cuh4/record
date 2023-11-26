@@ -11,6 +11,7 @@ import cv2
 import os
 import pathlib
 import mss
+import mss.windows
 import numpy
 import threading
 
@@ -110,3 +111,8 @@ class recorder:
     def endRecording(self):
         # set state
         self.recording = False
+
+# // Setup
+# prevent mouse flickering from taking screenshots rapidly
+# solution source: https://github.com/BoboTiG/python-mss/issues/179
+mss.windows.CAPTUREBLT = 0
