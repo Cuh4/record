@@ -14,7 +14,7 @@ import modules
 def mainApp(page: flet.Page):
     # // set page properties
     # window size
-    page.window_height = 65
+    page.window_height = 45
     page.window_width = 400
     
     page.window_min_height = page.window_height
@@ -23,10 +23,13 @@ def mainApp(page: flet.Page):
     page.window_max_height = page.window_height
     page.window_max_width = page.window_width
     
+    # window properties
     page.window_resizable = False
     
     page.window_frameless = True
     page.window_title_bar_hidden = True
+    
+    page.window_always_on_top = True
 
     # page layout
     page.padding = 0
@@ -77,15 +80,7 @@ def mainApp(page: flet.Page):
                 ),
                 
                 # main app
-                flet.Column(
-                    controls = [
-                        recordControl
-                    ],
-                    
-                    expand = True,
-                    alignment = flet.MainAxisAlignment.SPACE_BETWEEN,
-                    spacing = 0
-                )
+                recordControl
             ],
             
             expand = True
