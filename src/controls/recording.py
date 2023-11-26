@@ -18,7 +18,7 @@ import modules
 # // ---- Main
 class control(flet.UserControl):
     # // init
-    def __init__(self, page: flet.Page, videoCodec: str = "mp4v", videoFileExtension: str = "mp4", folderPath: str = "", expand: int|bool = None):
+    def __init__(self, page: flet.Page, videoCodec: str = "mp4v", videoFileExtension: str = "mp4", folderPath: str = ""):
         # // setup
         # init
         super().__init__()
@@ -41,9 +41,6 @@ class control(flet.UserControl):
         self.fps = 60
         
         self.targetMonitor = self.monitors[0]
-        
-        # control attributes
-        self.expand = expand or False
 
         # other
         self.page = page
@@ -100,12 +97,12 @@ class control(flet.UserControl):
                     self.timerText
                 ],
                 
-                expand = True
+                expand = True,
+                scale = 0.7
             ),
 
-            expand = self.expand,
-            alignment = flet.alignment.center_left,
-            scale = 0.7
+            expand = True,
+            padding = flet.padding.only(right = 150)
         )
         
     # // functionality
