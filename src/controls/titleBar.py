@@ -75,7 +75,7 @@ class control(flet.UserControl):
                                 self.minimizeButton,
                                 self.topMostButton,
                                 self.closeButton
-                            ],
+                            ]
                         )
                     ],
                     
@@ -84,7 +84,8 @@ class control(flet.UserControl):
                 ),
 
                 bgcolor = modules.helpers.RGBToHex(15, 15, 15),
-                expand = True
+                expand = True,
+                padding = flet.padding.only(left = 5, right = 5)
             ),
             
             height = self.height,
