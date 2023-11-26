@@ -4,7 +4,6 @@
 
 # // ---- Imports
 import flet
-import math
 
 import controls
 import modules
@@ -14,8 +13,8 @@ import modules
 def mainApp(page: flet.Page):
     # // set page properties
     # window size
-    page.window_height = 45
-    page.window_width = 400
+    page.window_height = 75
+    page.window_width = 500
     
     page.window_min_height = page.window_height
     page.window_min_width = page.window_width
@@ -28,18 +27,15 @@ def mainApp(page: flet.Page):
     
     page.window_frameless = True
     page.window_title_bar_hidden = True
-    
-    page.window_always_on_top = True
 
     # page layout
     page.padding = 0
+    page.spacing = 0
     page.vertical_alignment = flet.MainAxisAlignment.CENTER
-    page.horizontal_alignment = flet.CrossAxisAlignment.CENTER
     
     # page appearance
     page.title = "Record"
-    page.bgcolor = modules.helpers.RGBToHex(15, 15, 15)
-    
+    page.bgcolor = modules.helpers.RGBToHex(245, 245, 245)
     
     # fonts
     page.fonts = {
@@ -58,38 +54,28 @@ def mainApp(page: flet.Page):
         folderPath = "videos"
     )
     
-    recordControl.setupNavigationDrawer()
+    # titlebar
+    titleBar = controls.titleBar(
+        page = page,
+        name = page.title,
+        iconSize = 10,
+        height = 22
+    )
     
     # finalization
-    page.add(
-        flet.Stack(
-            controls = [
-                # background
-                flet.Container(
-                    # background gradient
-                    gradient = flet.LinearGradient(
-                        colors = [
-                            modules.helpers.RGBToHex(25, 12, 0),
-                            modules.helpers.RGBToHex(0, 0, 12)
-                        ],
-                        
-                        rotation = math.radians(35)
-                    ),
-
-                    expand = True
-                ),
-                
-                # main app
-                recordControl
-            ],
-            
-            expand = True
-        )
-    )
+    page.add(flet.Column(
+        controls = [
+            titleBar,
+            recordControl
+        ],
+        
+        expand = True,
+        alignment = flet.MainAxisAlignment.SPACE_BETWEEN
+    ))
     
 # // Start app
 flet.app(
     target = mainApp,
     name = "Record",
-    assets_dir = modules.helpers.getWorkingDirectory() if modules.helpers.isBuiltApplication() else "assets"
+    assets_dir = modules.helpers.path("assets")
 )
