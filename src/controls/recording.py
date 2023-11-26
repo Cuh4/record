@@ -91,7 +91,7 @@ class control(flet.UserControl):
         
         # // main
         # finalization
-        mainUI = flet.Container(
+        return flet.Container(
             content = flet.Row(
                 controls = [
                     self.recordingButton,
@@ -107,8 +107,6 @@ class control(flet.UserControl):
             alignment = flet.alignment.center_left,
             scale = 0.7
         )
-
-        return mainUI
         
     # // functionality
     # helpers
