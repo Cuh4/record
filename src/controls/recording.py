@@ -181,23 +181,15 @@ class control(flet.UserControl):
         if self.recording:
             # change icon of recording button
             self.recordingButton.icon = flet.icons.STOP_ROUNDED
-            
-            # change color of close button
-            self.closeButton.color = flet.colors.GREY_900
         else:
             # change icon of recording button
             self.recordingButton.icon = flet.icons.CIRCLE_SHARP
             
-            # change color of close button
-            self.closeButton.color = flet.colors.WHITE
-            
         # disable controls depending on recording state
         self.fpsSlider.disabled = self.recording
-        self.closeButton.disabled = self.recording
-            
+
         # update
         self.fpsSlider.update()
-        self.closeButton.update()
         self.recordingButton.update()
         
     def folder_onClick(self, _):
