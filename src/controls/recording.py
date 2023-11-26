@@ -11,13 +11,14 @@ import screeninfo
 import time
 import win10toast_click as win10toast
 import threading
+from uuid import uuid4
 
 import modules
 
 # // ---- Main
 class control(flet.UserControl):
     # // init
-    def __init__(self, page: flet.Page, defaultVideoFileName: str = "unnamed", videoCodec: str = "mp4v", videoFileExtension: str = "mp4", folderPath: str = "", expand: int|bool = None):
+    def __init__(self, page: flet.Page, videoCodec: str = "mp4v", videoFileExtension: str = "mp4", folderPath: str = "", expand: int|bool = None):
         # // setup
         # init
         super().__init__()
@@ -27,7 +28,6 @@ class control(flet.UserControl):
         
         # // attributes
         # paths, names, etc
-        self.videoFileName = defaultVideoFileName
         self.folderPath = os.path.abspath(folderPath)
         
         self.videoFileExtension = videoFileExtension
@@ -112,6 +112,9 @@ class control(flet.UserControl):
         
     # // functionality
     # helpers
+    def generateVideoFileName(self):
+        return str(uuid4())
+    
     def getMonitorID(self):
         for monitorID, mon in enumerate(self.monitors):
             if mon == self.targetMonitor:
@@ -136,9 +139,6 @@ class control(flet.UserControl):
             threaded = True,
             callback_on_click = self.openVideoFolder
         )
-    
-    def changeFileName(self, newFileName: str):
-        self.videoFileName = modules.helpers.pathSafeName(newFileName)
     
     # control updates
     def updateTimerText(self):
@@ -211,7 +211,7 @@ class control(flet.UserControl):
 
         # record screen
         self.recorder = modules.recorder(
-            fileName = self.videoFileName,
+            fileName = self.generateVideoFileName(),
             resolution = (self.targetMonitor.width, self.targetMonitor.height),
             codec = self.videoCodec, 
             fileExtension = self.videoFileExtension,
