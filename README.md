@@ -1,7 +1,7 @@
 # Record
 
 ### **Overview**
-Flet (Python implementation of Google's Flutter) app designed to record your primary monitor's screen. Includes audio and video.
+Flet (Python implementation of Google's Flutter) app designed to record your primary monitor's screen. Only records video, no audio.
 
 ### **How To Use**
 1) `git clone` this repo.
